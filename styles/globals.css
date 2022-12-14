@@ -6,8 +6,17 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Eudoxus Sans", sans-serif;
+  font-family: 'Eudoxus Sans', sans-serif;
   scroll-behavior: smooth;
+}
+
+@layer base {
+  ::-webkit-scrollbar {
+    @apply bg-black w-[4px];
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white rounded-full;
+  }
 }
 
 .gradient-01 {
