@@ -48,7 +48,7 @@ const Feedback = () => (
           <img
             src="/stamp.png"
             alt="stamp/img"
-            className="w-[155px] h-[155px] object-contain"
+            className="w-[155px] animate-spin-slow h-[155px] object-contain"
           />
         </motion.div>
       </motion.div>

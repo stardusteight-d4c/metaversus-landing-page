@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './app/**/*.{html,js,jsx}',
+    './pages/**/*.{html,js,jsx}',
     './components/**/*.{html,js,jsx}',
     './sections/**/*.{html,js,jsx}',
     './styles/**/*.{js,jsx}',
@@ -9,6 +9,12 @@ module.exports = {
   mode: 'jit',
   theme: {
     extend: {
+      screens: {
+        xs: '400px',
+      },
+      animation: {
+        'spin-slow': 'spin 8s linear infinite',
+      },
       colors: {
         'primary-black': '#1A232E',
         'secondary-white': '#c7c7c7',
@@ -19,4 +25,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+}
