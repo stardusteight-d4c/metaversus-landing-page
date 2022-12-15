@@ -10,7 +10,7 @@
 > `Framer Motion` which is also a modern solution for creating simple and sophisticated linear animations.
 
 :arrow_right: Next.js | The React Framework <br />
-:arrow_right: React 18 and Next.js 13 | Rendering Fundamentals <br />
+:arrow_right: Rendering Fundamentals & Performance | React 18 and Next.js 13 <br />
 :arrow_right: Framer Motion <br />
 :arrow_right: File Structure and Static Files <br />
 
