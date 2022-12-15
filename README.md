@@ -204,3 +204,221 @@ export default Explore
 *<i>beta.nextjs.org/docs/rendering/fundamentals</i> <br />
 *<i>beta.nextjs.org/docs/rendering/server-and-client-components</i> <br />
 
+<br />
+ 
+## Framer Motion | Production-ready declarative animations.
+
+A simple declarative syntax means you write less code. Less code means your codebase is easier to read and maintain.
+
+### Overview
+
+ - <strong>Variants</strong>
+
+Variants can be used to animate entire sub-trees of components with a single animate prop. Options like when and staggerChildren can be used to declaratively orchestrate these animations.
+
+ - <strong>Scroll-triggered animations</strong>
+
+Elements can animate as they `enter and leave the viewport` with the handy `whileInView` prop.
+
+```js
+// utils/motion.js
+
+export const navVariants = {
+  hidden: {
+    opacity: 0,
+    y: -50,
+    transition: {
+      type: 'spring',
+      stiffness: 300,
+      damping: 140,
+    },
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 80,
+      delay: 1,
+    },
+  },
+};
+```
+
+```jsx
+// components/Navbar.jsx
+
+import { motion } from 'framer-motion'
+import styles from '../styles'
+import { navVariants } from '../utils/motion'
+
+const Navbar = () => (
+  <motion.nav
+    variants={navVariants}
+    initial="hidden"
+    whileInView="show"
+    className={`${styles.xPaddings} py-8 relative`}
+  >
+   // children
+  </motion.nav>
+)
+
+export default Navbar
+```
+
+ - <strong>Server-side rendering</strong>
+
+The animated state of a component will be rendered `server-side` to prevent flashes of re-styled content after your JavaScript loads.
+
+ - <strong>Transition</strong>
+
+A transition `defines how values animate from one state to another`.
+
+A transition defines the type of animation used when animating between two values.
+
+
+```jsx
+<motion.div
+  animate={{ x: 100 }}
+  transition={{ delay: 1 }}
+/>
+```
+
+It can also accept props that define which `type` of animation to use a `Tween`, `Spring` or `Inertia`.
+
+```jsx
+<motion.div
+  animate={{ x: 100 }}
+  transition={{ type: "spring", stiffness: 100 }}
+/>
+```
+
+In this application, different approaches were used to animate different components, for example, you can create a style variation and apply it to each letter of a text, for this the `<TypingText />` component was created:
+
+```js
+// utils/motion.js
+
+export const textContainer = {
+  hidden: {
+    opacity: 0,
+  },
+  show: (i = 1) => ({
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: i * 0.1 },
+  }),
+};
+
+export const textVariant2 = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: 'tween',
+      ease: 'easeIn',
+    },
+  },
+};
+```
+
+```jsx
+// components/CustomText.jsx
+
+export const TypingText = ({ title, textStyles }) => (
+  <motion.p
+    variants={textContainer}
+    className={`font-normal text-sm text-secondary-white ${textStyles}`}
+  >
+    {Array.from(title).map((letter, index) => (
+      <motion.span variants={textVariant2} key={index}>
+        {letter === ' ' ? '\u00A0' : letter}
+      </motion.span>
+    ))}
+  </motion.p>
+)
+```
+
+ - <strong>Orchestration</strong>
+
+> delay: number
+
+Delay the animation by this duration (in seconds). Defaults to 0.
+
+```js
+const transition = {
+  delay: 0.2
+}
+```
+
+> delayChildren: number
+
+When using variants, children animations will start after this duration (in seconds). You can add the `transition` property to both the `Frame` and the `variant` directly. Adding it to the `variant` generally offers more flexibility, as it allows you to customize the delay per visual state.
+
+```jsx
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      delayChildren: 0.5
+    }
+  }
+}
+
+const item = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1 }
+}
+
+return (
+  <motion.ul
+    variants={container}
+    initial="hidden"
+    animate="show"
+  >
+    <motion.li variants={item} />
+    <motion.li variants={item} />
+  </motion.ul>
+)
+```
+
+> staggerChildren: number
+
+When using variants, animations of child components can be staggered by this duration (in seconds).
+
+For instance, if `staggerChildren` is `0.01`, the first child will be delayed by `0` seconds, the second by `0.01`, the third by `0.02` and so on.
+
+The calculated stagger delay will be added to delayChildren.
+
+```jsx
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.5
+    }
+  }
+}
+
+const item = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1 }
+}
+
+return (
+  <motion.ol
+    variants={container}
+    initial="hidden"
+    animate="show"
+  >
+    <motion.li variants={item} />
+    <motion.li variants={item} />
+  </motion.ol>
+)
+```
+
+*<i>framer.com/docs/introduction</i> <br />
