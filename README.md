@@ -7,7 +7,7 @@
 > enables hybrid rendering (static and server-side), TypeScript support, smart packaging, route prefetching for web apps based on React). 
 > In this project we use good practices for creating web interfaces, how to deal with static files, constants and how to separate responsibilities 
 > with organizing directories for front-end applications. In addition to these modern technologies that we have on the market, we use the package
-> `Framer Motion` which is also a modern solution for creating simple and sophisticated linear animations.
+> `Framer Motion` which is also a modern solution for creating sophisticated linear animations.
 
 :arrow_right: Next.js | The React Framework <br />
 :arrow_right: Rendering Fundamentals & Performance | React 18 and Next.js 13 <br />
