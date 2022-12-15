@@ -2,7 +2,7 @@
 
 ![banner](banner.png)
 
-> Project for the construction of a leaning page carried out on the `JavaScript Mastery` channel, where he was taught how to incorporate a `Figma` layout 
+> Project for the construction of a landing page carried out on the `JavaScript Mastery` channel, where he was taught how to incorporate a `Figma` layout 
 > into the a `React` code (library to create user interfaces in web pages) using the `Next.js 13` framework (production ready framework that
 > enables hybrid rendering (static and server-side), TypeScript support, smart packaging, route prefetching for web apps based on React). 
 > In this project we use good practices for creating web interfaces, how to deal with static files, constants and how to separate responsibilities 
