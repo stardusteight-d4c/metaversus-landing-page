@@ -93,3 +93,114 @@ The src directory is very common in many apps and Next.js supports it by default
  - Config files like next.config.js and tsconfig.json, as well as environment variables, should be inside the root directory, moving them to src won't work. Same goes for the public directory.
 
 *<i>nextjs.org/docs/getting-started</i>
+
+<br />
+ 
+## Rendering Fundamentals & Performance | React 18 and Next.js 13
+
+Rendering converts the code you write into user interfaces.
+
+`React 18 and Next.js 13 introduced new ways to render your application`. This page will help you understand the differences between `rendering environments, strategies, runtimes, and how to opt into them`.
+
+### Rendering Environments
+
+There are two environments where your application code can be rendered: the `client` and the `server`.
+
+ - The `client` refers to the browser on a user’s device that sends a request to a server for your application code. It then turns the response from the server into an interface the user can interact with.
+ - The `server` refers to the computer in a data center that stores your application code, receives requests from a client, does some computation, and sends back an appropriate response.
+ 
+> Note: Server is a general name that can refer to computers in Origin Regions
+> where your application is deployed to, the Edge Network where your application
+> code is distributed, or Content Delivery Networks (CDNs) where the result of 
+> the rendering work can be cached.
+
+### Component-level Client and Server Rendering
+
+`Before React 18`, the primary way to render your application using React was entirely on the client.
+
+Next.js provided an easier way to break down your application into pages and prerender on the server by generating HTML and sending it to the client to be `hydrated` by React. However, this led to `additional JavaScript needed on the client` to make the initial HTML interactive.
+
+Now, with `Server and Client Components`, React can render on the client and the server meaning you can choose the rendering environment at the component level. By default, the `app directory uses Server Components`, allowing you to easily render components on the server and `reducing the amount of JavaScript sent to the client`. However, you have the option to use Client Components inside app and render on the client.
+
+You can `interleave Server and Client Components in your application`, and behind the scenes, `React will seamlessly merge the work of both environments`.
+
+### Server and Client Components
+
+Server and Client Components allow developers to build applications that span the server and client, `combining the rich interactivity of client-side apps with the improved performance of traditional server rendering`.
+
+### Server Components
+
+All components inside the `app` directory are `React Server Components by default`, including special files and colocated components. This allows you to automatically adopt Server Components with no extra work, and achieve great performance out of the box.
+
+#### Why Server Components?
+
+Server Components (RFC) allow developers to `better leverage server infrastructure`. For example, large dependencies that previously would impact the JavaScript bundle size on the client `can instead remain entirely on the server, leading to improved performance`. However, the app directory does still require JavaScript.
+
+When a route is loaded, the Next.js and React runtime will be loaded, which is cacheable and predictable in size. This runtime does not increase in size as your application grows. Further, the runtime is asynchronously loaded, `enabling your HTML from the server to be progressively enhanced on the client`.
+
+Additional JavaScript is only added as client-side interactivity is used in your application through Client Components.
+
+#### Client Components
+
+Client Components are rendered on the `client`. With Next.js, Client Components can also be `pre-rendered on the server and hydrated on the client`.
+
+##### Convention
+
+To use a Client Component, create a file inside `app` and add the `"use client"` directive at the top of the file (before any imports).
+
+```jsx
+'use client'
+
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { ExploreCard, TitleText, TypingText } from '../components'
+import { staggerContainer } from '../utils/motion'
+import { exploreWorlds } from '../constants'
+import styles from '../styles'
+
+const Explore = () => {
+  const [active, setActive] = useState('world-2')
+
+  return (
+    <section className={`${styles.paddings}`} id="explore">
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: false, amount: 0.25 }}
+        className={`${styles.innerWidth} mx-auto flex flex-col`}
+      >
+        <TypingText title="| The World" textStyles="text-center" />
+        <TitleText
+          title={
+            <>
+              Chooose the world you want <br className="md:block hidden" /> to
+              explore
+            </>
+          }
+          textStyles="text-center"
+        />
+        <div className="mt-[50px] flex lg:flex-row flex-col min-h-[70vh] gap-5">
+          {exploreWorlds.map((world, index) => (
+            <ExploreCard
+              key={world.id}
+              {...world}
+              index={index}
+              active={active}
+              handleClick={setActive}
+            />
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  )
+}
+
+export default Explore
+```
+
+`You only need to mark components as 'use client' when they use client hooks such as useState or useEffect`. It's best to leave components that do not depend on client hooks without the directive so that they can automatically be rendered as a Server Component when they aren't imported by another Client Component. This helps ensure the smallest amount of client-side JavaScript. 
+
+*<i>beta.nextjs.org/docs/rendering/fundamentals</i> <br />
+*<i>beta.nextjs.org/docs/rendering/server-and-client-components</i> <br />
+
