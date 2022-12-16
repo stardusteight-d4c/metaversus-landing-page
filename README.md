@@ -11,7 +11,7 @@
 
 :arrow_right: Next.js | The React Framework <br />
 :arrow_right: Rendering Fundamentals & Performance | React 18 and Next.js 13 <br />
-:arrow_right: Framer Motion | Production-ready declarative animations. <br />
+:arrow_right: Framer Motion | Production-ready declarative animations <br />
 
 <br />
 
@@ -205,7 +205,7 @@ export default Explore
 
 <br />
  
-## Framer Motion | Production-ready declarative animations.
+## Framer Motion | Production-ready declarative animations
 
 A simple declarative syntax means you write less code. Less code means your codebase is easier to read and maintain.
 
